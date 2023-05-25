@@ -43,9 +43,16 @@ function Board({ nrows=6, ncols=6, chanceLightStartsOn=0.5 }) {
     return initialBoard;
   }
 
+  // TODO: check the board in state to determine whether the player has won.
   function hasWon() {
-    // TODO: check the board in state to determine whether the player has won.
-    return false;
+    for(let r=0; r<nrows; r++){
+        for(let c=0; c<ncols; c++){
+            if (board[r][c] === true){
+                return false
+            }
+        }
+    }
+    return true;
   }
 
   function flipCellsAround(coord) {
@@ -83,23 +90,24 @@ function Board({ nrows=6, ncols=6, chanceLightStartsOn=0.5 }) {
     return(
       <h1> You Won!</h1>
     )
-  }else{
-    return(
-      <table>
-        <tbody>
-          {board.map((r,idxr) => <tr key={idxr}>
-            {r.map((c,idxc) =>
-              <Cell
-                key={`${idxr}-${idxc}`}
-                flipCellsAroundMe={() => flipCellsAround(`${idxr}-${idxc}`)}
-                isLit={c}
-              />
-              )}
-          </tr>)}
-        </tbody>
-      </table>
-    )
   }
+
+    return(
+        <table>
+            <tbody>
+                {board.map((r,idxr) => <tr key={idxr}>
+                {r.map((c,idxc) =>
+                    <Cell
+                    key={`${idxr}-${idxc}`}
+                    flipCellsAroundMe={() => flipCellsAround(`${idxr}-${idxc}`)}
+                    isLit={c}
+                    />
+                    )}
+                </tr>)}
+            </tbody>
+        </table>
+    )
+
 }
 
 export default Board;
